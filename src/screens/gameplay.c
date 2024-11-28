@@ -29,9 +29,7 @@ static void draw_line(bool paused) {
     }
 }
 
-static void draw_paused(void) {
-    const char *text = "PAUSED";
-
+static void draw_message(const char *text) {
     Vector2 text_size =
         MeasureTextEx(GetFontDefault(), text, FONT_SIZE, (float)FONT_SIZE / 10);
 
@@ -39,39 +37,40 @@ static void draw_paused(void) {
              GetScreenHeight() / 2 - (int)text_size.y / 2, FONT_SIZE, WHITE);
 }
 
-static void draw_restart(void) {
-    const char *text = "PRESS R TO RESTART";
-
-    Vector2 text_size =
-        MeasureTextEx(GetFontDefault(), text, FONT_SIZE, (float)FONT_SIZE / 10);
-
-    DrawText(text, GetScreenWidth() / 2 - (int)text_size.x / 2,
-             GetScreenHeight() / 2 - (int)text_size.y / 2, FONT_SIZE, WHITE);
+static void screen_gameplay_restart(struct game_state *state) {
+    screen_gameplay_init(state);
+    state->started = true;
+    state->paused  = false;
 }
 
 void screen_gameplay_init(struct game_state *state) {
     assert(state);
 
-    state->paused = false;
-    state->player = make_paddle(PADDLE_LEFT);
-    state->rival  = make_paddle(PADDLE_RIGHT);
-    state->ball   = make_ball();
+    state->paused  = true;
+    state->started = false;
+    state->player  = make_paddle(PADDLE_LEFT);
+    state->rival   = make_paddle(PADDLE_RIGHT);
+    state->ball    = make_ball();
 }
 
 void screen_gameplay_deinit(struct game_state *state) {
     assert(state);
 
-    state->paused = false;
-    state->player = (struct paddle){0};
-    state->rival  = (struct paddle){0};
-    state->ball   = (struct ball){0};
+    state->paused  = true;
+    state->started = false;
+    state->player  = (struct paddle){0};
+    state->rival   = (struct paddle){0};
+    state->ball    = (struct ball){0};
 }
 
 void screen_gameplay_input(struct game_state *state) {
     assert(state);
 
-    if (IsKeyPressed(KEY_R)) game_init(state);
-    if (IsKeyPressed(KEY_SPACE)) state->paused = !state->paused;
+    if (IsKeyPressed(KEY_R)) screen_gameplay_restart(state);
+    if (IsKeyPressed(KEY_SPACE)) {
+        state->paused = !state->paused;
+        if (!state->started && !state->paused) state->started = true;
+    }
 
     if (!state->paused) {
         if (IsKeyDown(KEY_W)) paddle_move_up(&state->player);
@@ -103,14 +102,19 @@ void screen_gameplay_draw(struct game_state *const state) {
     draw_line(state->paused);
     if (state->paused) {
         if (paddle_win(&state->player) || paddle_win(&state->rival)) {
-            draw_restart();
-        } else draw_paused();
+            draw_message("PRESS R TO RESTART");
+        } else if (!state->started) {
+            draw_message("PRESS SPACE TO START");
+        } else {
+            draw_message("PAUSED");
+        }
     }
 
     paddle_draw(&state->player);
     paddle_draw(&state->rival);
 
-    if (!paddle_win(&state->player) && !paddle_win(&state->rival)) {
+    if (state->started && !paddle_win(&state->player) &&
+        !paddle_win(&state->rival)) {
         ball_draw(&state->ball);
     }
 }

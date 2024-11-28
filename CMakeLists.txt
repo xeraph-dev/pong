@@ -25,7 +25,6 @@ add_executable(
     src/paddle.c
     src/screen.c
     src/screens/gameplay.c
-    src/screens/title.c
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 target_compile_options(

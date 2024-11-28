@@ -18,6 +18,11 @@ void screen_title_deinit(struct game_state *state);
 void screen_gameplay_deinit(struct game_state *state);
 void screen_ending_deinit(struct game_state *state);
 
+void screen_input(struct game_state *state);
+void screen_title_input(struct game_state *state);
+void screen_gameplay_input(struct game_state *state);
+void screen_ending_input(struct game_state *state);
+
 void screen_update(struct game_state *state);
 void screen_title_update(struct game_state *state);
 void screen_gameplay_update(struct game_state *state);

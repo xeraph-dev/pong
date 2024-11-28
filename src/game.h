@@ -16,5 +16,6 @@ struct game_state {
     struct ball      ball;
 };
 
-struct game_state make_game(void);
-void              game_run(struct game_state *state);
+void game_init(struct game_state *state);
+void game_update(struct game_state *state);
+void game_draw(struct game_state *const state);

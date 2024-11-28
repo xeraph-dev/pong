@@ -3,8 +3,33 @@
 // license that can be found in the LICENSE file.
 
 #include "game.h"
+#include <raylib.h>
+
+static const int   SCREEN_WIDTH  = 854;
+static const int   SCREEN_HEIGHT = 480;
+static const char *WINDOW_TITLE  = "PONG";
+static const int   TARGET_FPS    = 60;
 
 int main(void) {
-    struct game_state game = make_game();
-    game_run(&game);
+    struct game_state state = {0};
+
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
+    SetTargetFPS(TARGET_FPS);
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
+
+    game_init(&state);
+
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(BLACK);
+
+        game_update(&state);
+        game_draw(&state);
+
+        EndDrawing();
+    }
+
+    CloseWindow();
+
+    return 0;
 }

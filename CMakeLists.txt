@@ -22,10 +22,8 @@ add_executable(
     src/main.c
     src/ball.c
     src/game.c
-    src/input.c
     src/paddle.c
     src/screen.c
-    src/screens/ending.c
     src/screens/gameplay.c
     src/screens/title.c
 )

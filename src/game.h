@@ -7,13 +7,14 @@
 #include "ball.h"
 #include "paddle.h"
 
-enum game_screen { SCREEN_EMPTY, SCREEN_TITLE, SCREEN_GAMEPLAY, SCREEN_ENDING };
+enum game_screen { SCREEN_EMPTY, SCREEN_TITLE, SCREEN_GAMEPLAY };
 
 struct game_state {
     enum game_screen screen;
     struct paddle    player;
     struct paddle    rival;
     struct ball      ball;
+    bool             paused;
 };
 
 void game_init(struct game_state *state);

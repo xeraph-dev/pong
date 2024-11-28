@@ -3,7 +3,6 @@
 // license that can be found in the LICENSE file.
 
 #include "game.h"
-#include <raylib.h>
 
 static const int   SCREEN_WIDTH  = 854;
 static const int   SCREEN_HEIGHT = 480;

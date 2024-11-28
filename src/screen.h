@@ -11,24 +11,19 @@ void change_screen(struct game_state *state, enum game_screen screen);
 void screen_init(struct game_state *state);
 void screen_title_init(struct game_state *state);
 void screen_gameplay_init(struct game_state *state);
-void screen_ending_init(struct game_state *state);
 
 void screen_deinit(struct game_state *state);
 void screen_title_deinit(struct game_state *state);
 void screen_gameplay_deinit(struct game_state *state);
-void screen_ending_deinit(struct game_state *state);
 
 void screen_input(struct game_state *state);
 void screen_title_input(struct game_state *state);
 void screen_gameplay_input(struct game_state *state);
-void screen_ending_input(struct game_state *state);
 
 void screen_update(struct game_state *state);
 void screen_title_update(struct game_state *state);
 void screen_gameplay_update(struct game_state *state);
-void screen_ending_update(struct game_state *state);
 
 void screen_draw(struct game_state *const state);
 void screen_title_draw(struct game_state *const state);
 void screen_gameplay_draw(struct game_state *const state);
-void screen_ending_draw(struct game_state *const state);

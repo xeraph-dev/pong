@@ -25,9 +25,6 @@ void screen_init(struct game_state *state) {
     case SCREEN_GAMEPLAY:
         screen_gameplay_init(state);
         break;
-    case SCREEN_ENDING:
-        screen_ending_init(state);
-        break;
     }
 }
 void screen_deinit(struct game_state *state) {
@@ -41,9 +38,6 @@ void screen_deinit(struct game_state *state) {
         break;
     case SCREEN_GAMEPLAY:
         screen_gameplay_deinit(state);
-        break;
-    case SCREEN_ENDING:
-        screen_ending_deinit(state);
         break;
     }
 }
@@ -60,9 +54,6 @@ void screen_input(struct game_state *state) {
     case SCREEN_GAMEPLAY:
         screen_gameplay_input(state);
         break;
-    case SCREEN_ENDING:
-        screen_ending_input(state);
-        break;
     }
 }
 
@@ -78,9 +69,6 @@ void screen_update(struct game_state *state) {
     case SCREEN_GAMEPLAY:
         screen_gameplay_update(state);
         break;
-    case SCREEN_ENDING:
-        screen_ending_update(state);
-        break;
     }
 }
 void screen_draw(struct game_state *const state) {
@@ -94,9 +82,6 @@ void screen_draw(struct game_state *const state) {
         break;
     case SCREEN_GAMEPLAY:
         screen_gameplay_draw(state);
-        break;
-    case SCREEN_ENDING:
-        screen_ending_draw(state);
         break;
     }
 }

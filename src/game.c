@@ -3,7 +3,6 @@
 // license that can be found in the LICENSE file.
 
 #include "game.h"
-#include "input.h"
 #include "screen.h"
 #include <assert.h>
 
@@ -15,7 +14,6 @@ void game_init(struct game_state *state) {
 void game_update(struct game_state *state) {
     assert(state);
 
-    input_update(state);
     screen_input(state);
     screen_update(state);
 }

@@ -6,6 +6,9 @@
 #include "assert.h"
 #include <math.h>
 #include <raylib.h>
+#include <stdio.h>
+
+static const int SCORES_TO_WIN = 2;
 
 static const Vector2 PADDLE_SIZE   = {10, 50};
 static const Color   PADDLE_COLOR  = WHITE;
@@ -35,6 +38,7 @@ void paddle_init(struct paddle *paddle, enum paddle_position position) {
 
     paddle->color = PADDLE_COLOR;
     paddle->speed = PADDLE_SPEED;
+    paddle->score = 0;
 }
 
 void paddle_update(struct paddle *const paddle) { assert(paddle); }
@@ -43,6 +47,34 @@ void paddle_draw(struct paddle *const paddle) {
     assert(paddle);
 
     DrawRectangleRec(paddle->rec, paddle->color);
+}
+
+void paddle_draw_score(struct paddle *const paddle) {
+    assert(paddle);
+
+    bool is_right = paddle->rec.x > (float)(GetScreenWidth()) / 2;
+
+    int  score_font_size = 48;
+    char score_str[2];
+    sprintf(score_str, "%d", paddle->score);
+    Vector2 score_size =
+        MeasureTextEx(GetFontDefault(), "+", (float)score_font_size,
+                      (float)score_font_size / 10);
+    int score_x = GetScreenWidth() / 4 - (int)score_size.x / 2;
+    int score_y = 50;
+    if (is_right) score_x += GetScreenWidth() / 2 + (int)score_size.x;
+    DrawText(score_str, score_x, score_y, score_font_size, WHITE);
+
+    if (paddle_win(paddle)) {
+        const char *win_str       = "WIN";
+        int         win_font_size = 30;
+        Vector2     win_size =
+            MeasureTextEx(GetFontDefault(), win_str, (float)win_font_size,
+                          (float)win_font_size / 10);
+        int win_x = score_x + (int)score_size.x / 2 - (int)win_size.x / 2;
+        int win_y = score_y + (int)score_size.y + 4;
+        DrawText(win_str, win_x, win_y, win_font_size, WHITE);
+    }
 }
 
 void paddle_move_up(struct paddle *paddle) {
@@ -56,4 +88,16 @@ void paddle_move_down(struct paddle *paddle) {
 
     paddle->rec.y = fminf(paddle->rec.y + paddle->speed * GetFrameTime(),
                           (float)(GetScreenHeight())-paddle->rec.height);
+}
+
+void paddle_score_up(struct paddle *paddle) {
+    assert(paddle);
+
+    paddle->score++;
+}
+
+bool paddle_win(struct paddle *const paddle) {
+    assert(paddle);
+
+    return paddle->score >= SCORES_TO_WIN;
 }

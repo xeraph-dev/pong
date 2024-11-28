@@ -11,7 +11,7 @@
 
 static const float   BALL_RADIUS = 5;
 static const Color   BALL_COLOR  = WHITE;
-static const Vector2 BALL_SPEED  = {400, 300};
+static const Vector2 BALL_SPEED  = {300, 200};
 
 static void ball_move(struct ball *ball) {
     assert(ball);

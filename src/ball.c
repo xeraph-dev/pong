@@ -6,6 +6,7 @@
 #include "paddle.h"
 #include <assert.h>
 #include <raymath.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 static const float   BALL_RADIUS = 5;
@@ -33,7 +34,10 @@ static void ball_handle_collisions(struct ball *ball, struct paddle *player,
     bool is_colliding_right =
         ball->center.x + ball->radius >= (float)(GetScreenWidth());
 
-    if (is_colliding_top || is_colliding_bottom) ball->speed.y *= -1;
+    if (is_colliding_top || is_colliding_bottom) {
+        ball->speed.y *= -1;
+        PlaySound(ball->impact_sound);
+    }
     if (is_colliding_left) paddle_score_up(rival);
     if (is_colliding_right) paddle_score_up(player);
 
@@ -43,9 +47,13 @@ static void ball_handle_collisions(struct ball *ball, struct paddle *player,
         CheckCollisionCircleRec(ball->center, ball->radius, rival->rec);
     if (is_colliding_player || is_colliding_rival) {
         ball->speed.x *= -1;
+        PlaySound(ball->impact_sound);
     }
 
-    if (is_colliding_left || is_colliding_right) ball_init(ball);
+    if (is_colliding_left || is_colliding_right) {
+        ball_restart(ball);
+        PlaySound(ball->destroy_sound);
+    }
 }
 
 struct ball make_ball(void) {
@@ -55,6 +63,21 @@ struct ball make_ball(void) {
 }
 
 void ball_init(struct ball *ball) {
+    assert(ball);
+
+    ball->impact_sound  = LoadSound("resources/sounds/ball_impact.ogg");
+    ball->destroy_sound = LoadSound("resources/sounds/ball_destroy.ogg");
+    ball_restart(ball);
+}
+
+void ball_deinit(struct ball *ball) {
+    assert(ball);
+
+    UnloadSound(ball->impact_sound);
+    UnloadSound(ball->destroy_sound);
+}
+
+void ball_restart(struct ball *ball) {
     assert(ball);
 
     ball->center.x = (float)(GetScreenWidth()) / 2;

@@ -60,7 +60,9 @@ void screen_gameplay_deinit(struct game_state *state) {
     state->started = false;
     state->player  = (struct paddle){0};
     state->rival   = (struct paddle){0};
-    state->ball    = (struct ball){0};
+
+    ball_deinit(&state->ball);
+    state->ball = (struct ball){0};
 }
 
 void screen_gameplay_input(struct game_state *state) {

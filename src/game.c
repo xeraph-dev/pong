@@ -11,6 +11,8 @@ void game_init(struct game_state *state) {
     change_screen(state, SCREEN_GAMEPLAY);
 }
 
+void game_deinit(struct game_state *state) { screen_deinit(state); }
+
 void game_update(struct game_state *state) {
     assert(state);
 

@@ -19,5 +19,6 @@ struct game_state {
 };
 
 void game_init(struct game_state *state);
+void game_deinit(struct game_state *state);
 void game_update(struct game_state *state);
 void game_draw(struct game_state *const state);

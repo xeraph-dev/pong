@@ -3,6 +3,7 @@
 // license that can be found in the LICENSE file.
 
 #include "game.h"
+#include <raylib.h>
 
 static const int   SCREEN_WIDTH  = 854;
 static const int   SCREEN_HEIGHT = 480;
@@ -15,6 +16,7 @@ int main(void) {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(TARGET_FPS);
     SetConfigFlags(FLAG_MSAA_4X_HINT);
+    InitAudioDevice();
 
     game_init(&state);
 
@@ -28,6 +30,9 @@ int main(void) {
         EndDrawing();
     }
 
+    game_deinit(&state);
+
+    CloseAudioDevice();
     CloseWindow();
 
     return 0;

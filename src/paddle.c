@@ -13,7 +13,7 @@ static const int SCORES_TO_WIN = 10;
 static const Vector2 PADDLE_SIZE   = {10, 50};
 static const Color   PADDLE_COLOR  = WHITE;
 static const float   PADDLE_OFFSET = 10;
-static const float   PADDLE_SPEED  = 300;
+static const float   PADDLE_SPEED  = 500;
 
 struct paddle make_paddle(enum paddle_position position) {
     struct paddle paddle = {0};
@@ -41,7 +41,7 @@ void paddle_init(struct paddle *paddle, enum paddle_position position) {
     paddle->score = 0;
 }
 
-void paddle_update(struct paddle *const paddle) { assert(paddle); }
+void paddle_update(struct paddle *const _) {}
 
 void paddle_draw(struct paddle *const paddle) {
     assert(paddle);

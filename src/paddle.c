@@ -8,7 +8,7 @@
 #include <raylib.h>
 #include <stdio.h>
 
-static const int SCORES_TO_WIN = 2;
+static const int SCORES_TO_WIN = 10;
 
 static const Vector2 PADDLE_SIZE   = {10, 50};
 static const Color   PADDLE_COLOR  = WHITE;

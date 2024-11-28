@@ -1,3 +1,6 @@
+# Copyright 2024 xeraph. All rights reserved. Use of this source code is
+# governed by a BSD-style license that can be found in the LICENSE file.
+
 cmake_minimum_required(VERSION 3.28)
 
 project(
@@ -14,11 +17,28 @@ set(CMAKE_C_EXTENSIONS off)
 
 find_package(raylib 5.5)
 
-add_executable(${PROJECT_NAME} src/main.c)
+add_executable(
+    ${PROJECT_NAME}
+    src/main.c
+    src/ball.c
+    src/game.c
+    src/paddle.c
+    src/screen.c
+    src/screens/ending.c
+    src/screens/gameplay.c
+    src/screens/title.c
+)
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 target_compile_options(
-    ${PROJECT_NAME} PRIVATE -Weverything -Werror -pedantic -Wno-declaration-after-statement -Wno-padded -ferror-limit=0
-                            -fdiagnostics-color
+    ${PROJECT_NAME}
+    PRIVATE -Weverything
+            -Werror
+            -pedantic
+            -Wno-declaration-after-statement
+            -Wno-padded
+            -Wno-switch-default
+            -ferror-limit=0
+            -fdiagnostics-color
 )
 target_compile_definitions(
     ${PROJECT_NAME} PUBLIC PROJECT_NAME="${PROJECT_NAME}"

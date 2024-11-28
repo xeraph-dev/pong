@@ -6,4 +6,4 @@ AlignConsecutiveAssignments: "Consecutive"
 AlignConsecutiveDeclarations: "Consecutive"
 AlignConsecutiveBitFields: "Consecutive"
 AlignConsecutiveMacros: "Consecutive"
-AllowShortIfStatementsOnASingleLine: true 
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
